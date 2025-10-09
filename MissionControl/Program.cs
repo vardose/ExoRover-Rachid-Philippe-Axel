@@ -43,7 +43,7 @@ while (true)
             break;
         case "2":
             Console.WriteLine("Moving down...");
-            missionControl.NouvelleCommande(new Command("rover", "missionControl", "move down"));
+            // missionControl.NouvelleCommande(new Command("rover", "missionControl", "move down"));
             break;
         case "3":
             Console.WriteLine("Moving left...");

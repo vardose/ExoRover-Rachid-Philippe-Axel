@@ -1,5 +1,4 @@
-using ExoRover;
-namespace Rover;
+namespace ExoRover;
 
 public interface IRover
 {

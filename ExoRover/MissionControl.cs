@@ -1,21 +1,16 @@
-using ExoRover;
-using System;
-using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace MissionControl;
+namespace ExoRover;
 
 public class MissionControl
 {
     public Command ParseUserInput(string input)
     {
-        // Vérification que la commande ne soit pas vide
+        // Vï¿½rification que la commande ne soit pas vide
         if (string.IsNullOrWhiteSpace(input))
         {
-            throw new ArgumentException("La commande ne peut pas être vide.");
+            throw new ArgumentException("La commande ne peut pas ï¿½tre vide.");
         }
 
-        // Commande nulle au début
+        // Commande nulle au dï¿½but
         Command? result = null;
 
         // Pour chaque lettre de la commande, on y associe la commande correspondante

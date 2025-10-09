@@ -1,6 +1,4 @@
-using ExoRover;
-using MissionControl;
-namespace Rover;
+namespace ExoRover;
 
 public class Rover
 {
