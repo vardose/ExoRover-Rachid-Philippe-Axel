@@ -11,9 +11,7 @@ public interface IRover
     /// </summary>
     /// <returns>Returns the Rover's state and position and if there's an obstacle with its position.</returns>
     ///
-    public object ProcessCommands( Command Command)
-    
+    public void ProcessCommands( Command Command)
     {
-            
     }
 }

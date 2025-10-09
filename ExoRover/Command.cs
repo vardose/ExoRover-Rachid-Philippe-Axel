@@ -47,6 +47,9 @@ public class Command
 
     public Command(string receiver, string initiator, string command)
     {
+        Receiver = receiver;
+        Initiator = initiator;
+        CommandTodo = command;
     }
 
     #endregion

@@ -9,6 +9,7 @@ public class MissionControlClass
     protected virtual void OnCommandeTransmit(Command command)
     {
         CommandeTransmit?.Invoke(this, command);
+        Console.WriteLine($"Initiateur de commande : {command.Initiator} \nDestinataire de la commande : {command.Receiver} \nCommande : {command.CommandTodo} \nType de la commande {command.TypeCommand}");
     }
 
 
