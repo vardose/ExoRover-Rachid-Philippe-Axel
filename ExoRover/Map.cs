@@ -5,6 +5,7 @@ public class Map
     #region Fields
 
     private string mapName;
+    private List<Obstacle> obstacles ;
 
     #endregion
 

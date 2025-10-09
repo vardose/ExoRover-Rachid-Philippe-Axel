@@ -6,8 +6,7 @@ public class Command
 
     private string receiver;
     private string initiator;
-    private string commandType;
-    private string command;
+    private object command;
 
     #endregion
 
@@ -25,13 +24,7 @@ public class Command
         set => initiator = value;
     }
 
-    public string CommandType
-    {
-        get => commandType;
-        set => commandType = value;
-    }
-
-    public string CommandTodo
+    public object CommandTodo
     {
         get => command;
         set => command = value ?? throw new ArgumentNullException(nameof(value));
@@ -45,7 +38,7 @@ public class Command
     {
     }
 
-    public Command(string receiver, string initiator, string commandType, string command)
+    public Command(string receiver, string initiator, string command)
     {
     }
 
