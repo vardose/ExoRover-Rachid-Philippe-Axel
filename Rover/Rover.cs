@@ -1,5 +1,5 @@
 using ExoRover;
-
+using MissionControl;
 namespace Rover;
 
 public class Rover
@@ -49,5 +49,19 @@ public class Rover
 
     }
 
+    #endregion
+    
+    #region Methods
+
+    public void Subscribe(MissionControlClass missionControl)
+    {
+        missionControl.CommandeTransmit += OnMissonControlCommandRecieve;
+
+    }
+
+    private void OnMissonControlCommandRecieve(object sender, Command command)
+    {
+        Console.WriteLine(command);
+    }
     #endregion
 }
