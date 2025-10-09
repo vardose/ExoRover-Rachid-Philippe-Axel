@@ -1,25 +1,25 @@
-﻿using ExoRover;
-
-static void Main()
-{
-    var missionControl = new MissionControl();
-
-    Console.WriteLine("Entrez une suite de commandes (A, R, G, D) :");
-    string input = Console.ReadLine() ?? "";
-
-    try
-    {
-        Command command = missionControl.ParseUserInput(input);
-        Console.WriteLine($"Commande interprétée : {command}");
-    }
-    catch (ArgumentException ex)
-    {
-        Console.WriteLine("Erreur : " + ex.Message);
-    }
-}
+﻿// using ExoRover;
+//
+// static void Main()
+// {
+//     MissionControl missionControl = new MissionControl();
+//
+//     Console.WriteLine("Entrez une suite de commandes (A, R, G, D) :");
+//     string input = Console.ReadLine() ?? "";
+//
+//     try
+//     {
+//         Command command = missionControl.ParseUserInput(input);
+//         Console.WriteLine($"Commande interprétée : {command}");
+//     }
+//     catch (ArgumentException ex)
+//     {
+//         Console.WriteLine("Erreur : " + ex.Message);
+//     }
+// }
 
 // Execution du programme
-Main();
+// Main();
 
 
 // bool exit = false;
@@ -58,3 +58,37 @@ Main();
 //             break;
 //     }
 // }
+
+using System;
+
+namespace ExoRover
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Usage : ExoRover --mode=control OU --mode=rover");
+                return;
+            }
+
+            string mode = args[0].ToLower();
+
+            if (mode == "--mode=control")
+            {
+                MissionControl.Run();
+            }
+            else if (mode == "--mode=rover")
+            {
+                Rover.Run();
+            }
+            else
+            {
+                Console.WriteLine("Argument inconnu. Utilise --mode=control ou --mode=rover");
+            }
+        }
+    }
+}

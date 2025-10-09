@@ -11,18 +11,9 @@ public class MissionControlClass
         // Console.WriteLine($"Initiateur de commande : {command.Initiator} \nDestinataire de la commande : {command.Receiver} \nCommande : {command.CommandTodo} \nType de la commande {command.TypeCommand}");
     }
 
-
-
     public void NouvelleCommande(Command commande)
     {
         OnCommandeTransmit(commande);
         
     }
-    
-    
-    
-    
-   
-    
-    
 }
