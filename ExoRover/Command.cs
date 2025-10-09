@@ -27,6 +27,7 @@ public class Command
     private string receiver;
     private string initiator;
     private object command;
+    
 
     #endregion
 
@@ -43,12 +44,18 @@ public class Command
         get => initiator;
         set => initiator = value;
     }
-
+    public object TypeCommand
+    {
+        get => command.GetType();
+        
+    }
     public object CommandTodo
     {
         get => command;
         set => command = value ?? throw new ArgumentNullException(nameof(value));
     }
+    
+    
 
     #endregion
 
@@ -60,6 +67,9 @@ public class Command
 
     public Command(string receiver, string initiator, string command)
     {
+        Receiver = receiver;
+        Initiator = initiator;
+        CommandTodo = command;
     }
 
     #endregion
