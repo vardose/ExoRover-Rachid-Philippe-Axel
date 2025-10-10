@@ -6,7 +6,7 @@ public class Position
 
     private int longitude;
     private int latitude;
-    private int altitude;
+  
 
     #endregion
 
@@ -24,11 +24,7 @@ public class Position
         set => latitude = value;
     }
 
-    public int Altitude
-    {
-        get => altitude;
-        set => altitude = value;
-    }
+    
 
     #endregion
 
