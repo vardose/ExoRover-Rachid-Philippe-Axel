@@ -18,6 +18,24 @@ public class Rover
 
     #endregion
 
+    // récupération du fichier config
+    private readonly Config _config;
+
+    public Rover(Config config)
+    {
+        _config = config;
+    }
+
+    // Connection au reseau
+    public void Initialize(Command instruction)
+    {
+        Console.WriteLine("=== Rover ===");
+        Console.WriteLine($"Connexion à {_config.Communication.Host}:{_config.Communication.RoverPort}");
+        Console.WriteLine($"Position initiale: {string.Join(",", _config.RoverSettings.InitialPosition)}");
+        Console.WriteLine($"Orientation initiale: {_config.RoverSettings.Orientation}");
+        Console.WriteLine($"Instruction recue: {instruction}");
+    }
+
     #region Properties
 
     public Position Position
@@ -47,19 +65,5 @@ public class Rover
 
     }
 
-    #endregion
-    
-    #region Methods
-
-    public void Subscribe(MissionControlClass missionControl)
-    {
-        missionControl.CommandeTransmit += OnMissonControlCommandRecieve;
-
-    }
-
-    private void OnMissonControlCommandRecieve(object sender, Command command)
-    {
-        Console.WriteLine(command);
-    }
     #endregion
 }

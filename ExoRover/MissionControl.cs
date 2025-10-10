@@ -15,7 +15,6 @@ public class MissionControl
     {
         Console.WriteLine("=== Mission Control ===");
         Console.WriteLine($"Connexion à {_config.Communication.Host}:{_config.Communication.MissionControlPort}");
-        // Ici, tu pourrais démarrer un serveur TCP ou une boucle d'écoute
     }
 
     public Command ParseUserInput(string input)
