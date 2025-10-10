@@ -6,7 +6,6 @@ public class Position
 
     private int longitude;
     private int latitude;
-    private int altitude;
 
     #endregion
 
@@ -24,26 +23,14 @@ public class Position
         set => latitude = value;
     }
 
-    public int Altitude
-    {
-        get => altitude;
-        set => altitude = value;
-    }
-
     #endregion
 
     #region Constructors
-
-    public Position()
+    
+    public Position(int longitude = 0, int latitude = 0)
     {
-    }
-
-    public Position(int longitude, int latitude)
-    {
-    }
-
-    public Position(int longitude, int latitude, int altitude)
-    {
+        this.longitude = longitude;
+        this.latitude  = latitude;
     }
 
     #endregion

@@ -55,13 +55,30 @@ namespace ExoRover
 
             while (true)
             {
-                Console.Write("\nCommande à envoyer (ex: MOVE NORTH, SCAN, STOP): ");
+                Console.Write("\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, STOP): ");
                 string command = Console.ReadLine();
-
+                
                 if (string.IsNullOrWhiteSpace(command))
                     continue;
                 if (command.Equals("STOP"))
                     break;
+                
+                Command? result = null;
+                
+                foreach (char c in command.ToUpper())
+                {
+                    Command next = c switch
+                    {
+                        'A' => Command.Avancer,
+                        'R' => Command.Reculer,
+                        'G' => Command.TournerAGauche,
+                        'D' => Command.TournerADroite,
+                        _   => throw new ArgumentException($"Commande invalide: {c}")
+                    };
+
+                    result = result is null ? next : result + next;
+                }
+
 
                 byte[] data = Encoding.UTF8.GetBytes(command);
                 stream.Write(data, 0, data.Length);

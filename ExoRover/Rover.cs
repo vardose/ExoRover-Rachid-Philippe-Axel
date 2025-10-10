@@ -73,9 +73,8 @@ namespace ExoRover
 {
     public static class Rover
     {
-        static int    x   = 0;
-        static int    y   = 0;
-        static Random rnd = new Random();
+        static Position position = new Position();
+        static Orientation orientation = Orientation.Nord;
 
         public static void Run()
         {
@@ -83,19 +82,32 @@ namespace ExoRover
             {
                 TcpClient client = new TcpClient("127.0.0.1", 5000);
                 Console.WriteLine("🚗 Rover connecté à Mission Control !");
-                NetworkStream stream = client.GetStream();
+                NetworkStream stream   = client.GetStream();
 
                 while (true)
                 {
-                    byte[] buffer    = new byte[1024];
-                    int    bytesRead = stream.Read(buffer, 0, buffer.Length);
-                    string command   = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    byte[] buffer          = new byte[1024];
+                    int    bytesRead       = stream.Read(buffer, 0, buffer.Length);
+                    string commandReceived = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    string response        = string.Empty;
+                    
+                    foreach (char c in commandReceived.ToUpper())
+                    {
+                        Command next = c switch
+                        {
+                            'A' => Command.Avancer,
+                            'R' => Command.Reculer,
+                            'G' => Command.TournerAGauche,
+                            'D' => Command.TournerADroite,
+                            _   => throw new ArgumentException($"Commande invalide: {c}")
+                        };
 
-                    Console.WriteLine($"Commande reçue : {command}");
-                    Thread.Sleep(500); // Simule un petit délai
+                        response = ExecuteCommand(next);
+                    }
 
-                    string response = ExecuteCommand(command);
-                    byte[] data     = Encoding.UTF8.GetBytes(response);
+                    Console.WriteLine($"Position du Rover : \nLongitude : {position.Longitude} \nLatitude : {position.Latitude}");
+
+                    byte[] data = Encoding.UTF8.GetBytes(response);
                     stream.Write(data, 0, data.Length);
                 }
             }
@@ -105,21 +117,21 @@ namespace ExoRover
             }
         }
 
-        private static string ExecuteCommand(string command)
+        private static string ExecuteCommand(Command command)
         {
-            switch (command.ToUpper())
+            Point p = new Point(position.Longitude, position.Latitude);
+            switch (command.ToString())
             {
-                case "MOVE NORTH": y--; break;
-                case "MOVE SOUTH": y++; break;
-                case "MOVE EAST":  x++; break;
-                case "MOVE WEST":  x--; break;
+                case "A": p = orientation.Avancer(p); break;
+                case "R": p = orientation.Reculer(p); break;
+                case "G": orientation = orientation.RotationAntihoraire(); break;
+                case "D": orientation = orientation.RotationHoraire(); break;
             }
 
-            bool obstacle = rnd.Next(0, 10) < 2; // 20% de chance d’obstacle
-            if (obstacle)
-                return $"⚠️  Obstacle détecté à ({x}, {y}) !";
-
-            return $"✅ Position actuelle : ({x}, {y})";
+            position.Longitude = p.X;
+            position.Latitude = p.Y;
+            
+            return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude})";
         }
     }
 }
