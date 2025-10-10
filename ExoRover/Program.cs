@@ -1,38 +1,7 @@
 using ExoRover;
 using System.Threading;
 
-static void Main()
-{
     // Récupération du fichier config
-    var config = Config.Load("config.json");
-
-    var missionControl = new MissionControl(config);
-    var rover = new Rover(config);
-
-    Console.WriteLine("Entrez une suite de commandes (A, R, G, D) :");
-    string input = Console.ReadLine() ?? "";
-
-    try
-    {
-        // Création puis envoi de la commande
-        Command command = missionControl.ParseUserInput(input);
-        Console.WriteLine($"Commande {command} envoyée depuis le port: {config.Communication.MissionControlPort}");
-
-        Thread.Sleep(1000); // Attend 1 seconde (1000 ms)
-
-        // Connection du rover
-        rover.Initialize(command);
-    }
-    catch (ArgumentException ex)
-    {
-        Console.WriteLine("Erreur : " + ex.Message);
-    }
-}
-
-// Execution du programme
-Main();
-
-
 // bool exit = false;
 //
 // MissionControlClass missionControl = new MissionControlClass();
@@ -78,6 +47,8 @@ namespace ExoRover
     {
         static void Main(string[] args)
         {
+            Config config = Config.Load("config.json");
+            
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             if (args.Length == 0)
@@ -90,11 +61,13 @@ namespace ExoRover
 
             if (mode == "--mode=control")
             {
-                MissionControl.Run();
+                MissionControl missionControl = new MissionControl(config);
+                missionControl.Run();
             }
             else if (mode == "--mode=rover")
             {
-                Rover.Run();
+                Rover rover = new Rover(config);
+                rover.Run();
             }
             else
             {

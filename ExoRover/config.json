@@ -1,8 +1,8 @@
 {
   "Communication": {
-    "Host": "localhost",
+    "Host": "127.0.0.1",
     "MissionControlPort": 5000,
-    "RoverPort": 5001,
+    "RoverPort": 5000
   },
   "RoverSettings": {
     "Orientation": "N",

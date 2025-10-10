@@ -52,20 +52,21 @@ namespace ExoRover
         }
 
         // Connection au reseau
-        public void Start()
+        public TcpListener Start()
         {
             Console.WriteLine("=== Mission Control ===");
             Console.WriteLine($"Connexion à {_config.Communication.Host}:{_config.Communication.MissionControlPort}");
-            TcpListener server = new TcpListener(_config.Communication.Host, _config.Communication.MissionControlPort);
+            TcpListener server = new TcpListener(IPAddress.Parse(_config.Communication.Host), _config.Communication.MissionControlPort);
             server.Start();
+            return server;
         }
 
         // Connection au reseau
-        
+
         public void Run()
         {
-            Start();
-            
+            TcpListener server = Start();
+
             Console.WriteLine("🛰️  Mission Control en attente du rover...");
 
             TcpClient client = server.AcceptTcpClient();
@@ -74,14 +75,15 @@ namespace ExoRover
 
             while (true)
             {
-                Console.Write("\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, E : Exit): ");
+                Console.Write(
+                    "\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, E : Exit): ");
                 string command = Console.ReadLine();
-                
+
                 if (string.IsNullOrWhiteSpace(command))
                     continue;
                 if (command.Equals("E"))
                     break;
-                
+
                 foreach (char c in command.ToUpper())
                 {
                     if (!new List<char> { 'A', 'R', 'G', 'D' }.Contains(c))

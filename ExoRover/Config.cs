@@ -15,8 +15,7 @@ namespace ExoRover
                 throw new FileNotFoundException($"Fichier de configuration introuvable : {path}");
 
             string jsonString = File.ReadAllText(path);
-            var options = new JsonSerializerOptions { AllowTrailingCommas = true }; // Permet de gérer les virgules finales dans le JSON (Evite une erreur de compilation)
-            var config = JsonSerializer.Deserialize<Config>(jsonString, options);
+            var config = JsonSerializer.Deserialize<Config>(jsonString);
 
             if (config is null)
                 throw new Exception("Impossible de désérialiser la configuration.");
