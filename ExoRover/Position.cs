@@ -6,6 +6,10 @@ public class Position
 
     private int longitude;
     private int latitude;
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 62f771705a692ba852b119b921149b7a174729a1
 
     #endregion
 
@@ -23,6 +27,11 @@ public class Position
         set => latitude = value;
     }
 
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> 62f771705a692ba852b119b921149b7a174729a1
     #endregion
 
     #region Constructors

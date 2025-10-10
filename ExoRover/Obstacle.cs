@@ -4,31 +4,18 @@ public class Obstacle
 {
     #region Fields
 
-    private int longitude;
-    private int latitude;
-    private int altitude;
+    private Position position = new Position();
 
     #endregion
 
     #region Properties
 
-    public int Longitude
+    public  Position Positions
     {
-        get => longitude;
-        set => longitude = value;
+        get => position;
+        set => position = value;
     }
-
-    public int Latitude
-    {
-        get => latitude;
-        set => latitude = value;
-    }
-
-    public int Altitude
-    {
-        get => altitude;
-        set => altitude = value;
-    }
+    
 
     #endregion
 
