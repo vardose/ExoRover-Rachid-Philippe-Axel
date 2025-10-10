@@ -1,25 +1,36 @@
-﻿// using ExoRover;
-//
-// static void Main()
-// {
-//     MissionControl missionControl = new MissionControl();
-//
-//     Console.WriteLine("Entrez une suite de commandes (A, R, G, D) :");
-//     string input = Console.ReadLine() ?? "";
-//
-//     try
-//     {
-//         Command command = missionControl.ParseUserInput(input);
-//         Console.WriteLine($"Commande interprétée : {command}");
-//     }
-//     catch (ArgumentException ex)
-//     {
-//         Console.WriteLine("Erreur : " + ex.Message);
-//     }
-// }
+using ExoRover;
+using System.Threading;
+
+static void Main()
+{
+    // Récupération du fichier config
+    var config = Config.Load("config.json");
+
+    var missionControl = new MissionControl(config);
+    var rover = new Rover(config);
+
+    Console.WriteLine("Entrez une suite de commandes (A, R, G, D) :");
+    string input = Console.ReadLine() ?? "";
+
+    try
+    {
+        // Création puis envoi de la commande
+        Command command = missionControl.ParseUserInput(input);
+        Console.WriteLine($"Commande {command} envoyée depuis le port: {config.Communication.MissionControlPort}");
+
+        Thread.Sleep(1000); // Attend 1 seconde (1000 ms)
+
+        // Connection du rover
+        rover.Initialize(command);
+    }
+    catch (ArgumentException ex)
+    {
+        Console.WriteLine("Erreur : " + ex.Message);
+    }
+}
 
 // Execution du programme
-// Main();
+Main();
 
 
 // bool exit = false;

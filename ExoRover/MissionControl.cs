@@ -41,12 +41,31 @@ using System.Text;
 
 namespace ExoRover
 {
-    public static class MissionControl
+    public class MissionControl
     {
-        public static void Run()
+        // récupération du fichier config
+        private readonly Config _config;
+
+        public MissionControl(Config config)
         {
-            TcpListener server = new TcpListener(IPAddress.Any, 5000);
+            _config = config;
+        }
+
+        // Connection au reseau
+        public void Start()
+        {
+            Console.WriteLine("=== Mission Control ===");
+            Console.WriteLine($"Connexion à {_config.Communication.Host}:{_config.Communication.MissionControlPort}");
+            TcpListener server = new TcpListener(_config.Communication.Host, _config.Communication.MissionControlPort);
             server.Start();
+        }
+
+        // Connection au reseau
+        
+        public void Run()
+        {
+            Start();
+            
             Console.WriteLine("🛰️  Mission Control en attente du rover...");
 
             TcpClient client = server.AcceptTcpClient();

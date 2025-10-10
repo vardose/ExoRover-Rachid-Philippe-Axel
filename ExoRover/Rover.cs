@@ -106,6 +106,7 @@ namespace ExoRover
                     }
 
                     Console.WriteLine($"Position du Rover : \nLongitude : {position.Longitude} \nLatitude : {position.Latitude}");
+    
 
                     byte[] data = Encoding.UTF8.GetBytes(response);
                     stream.Write(data, 0, data.Length);
@@ -135,3 +136,23 @@ namespace ExoRover
         }
     }
 }
+
+// r�cup�ration du fichier config
+private readonly Config _config;
+
+public Rover(Config config)
+{
+    _config = config;
+}
+
+// Connection au reseau
+public void Initialize(Command instruction)
+{
+    Console.WriteLine("=== Rover ===");
+    Console.WriteLine($"Connexion � {_config.Communication.Host}:{_config.Communication.RoverPort}");
+    Console.WriteLine($"Position initiale: {string.Join(",", _config.RoverSettings.InitialPosition)}");
+    Console.WriteLine($"Orientation initiale: {_config.RoverSettings.Orientation}");
+    Console.WriteLine($"Instruction recue: {instruction}");
+}
+
+#region Properties
