@@ -1,0 +1,12 @@
+{
+  "Communication": {
+    "Host": "localhost",
+    "MissionControlPort": 5000,
+    "RoverPort": 5001,
+  },
+  "RoverSettings": {
+    "Orientation": "N",
+    "InitialPosition": [ 0, 0 ],
+    "isObstacleDetected": false
+  }
+}

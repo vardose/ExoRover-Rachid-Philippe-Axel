@@ -13,7 +13,7 @@ static void Main()
     try
     {
         Command command = missionControl.ParseUserInput(input);
-        Console.WriteLine($"Commande interprétée : {command}");
+        Console.WriteLine($"Commande {command} envoyée depuis le port: {config.MissionControlPort}");
     }
     catch (ArgumentException ex)
     {

@@ -2,7 +2,9 @@
 
 static void Main()
 {
-    var missionControl = new MissionControl();
+    var config = Config.Load("config.json");
+
+    var missionControl = new MissionControl(config);
 
     Console.WriteLine("Entrez une suite de commandes (A, R, G, D) :");
     string input = Console.ReadLine() ?? "";
@@ -10,7 +12,7 @@ static void Main()
     try
     {
         Command command = missionControl.ParseUserInput(input);
-        Console.WriteLine($"Commande interprétée : {command}");
+        Console.WriteLine($"Commande {command} envoyée depuis le port: {config.Communication.MissionControlPort}");
     }
     catch (ArgumentException ex)
     {
