@@ -55,28 +55,21 @@ namespace ExoRover
 
             while (true)
             {
-                Console.Write("\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, STOP): ");
+                Console.Write("\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, E : Exit): ");
                 string command = Console.ReadLine();
                 
                 if (string.IsNullOrWhiteSpace(command))
                     continue;
-                if (command.Equals("STOP"))
+                if (command.Equals("E"))
                     break;
-                
-                Command? result = null;
                 
                 foreach (char c in command.ToUpper())
                 {
-                    Command next = c switch
+                    if (!new List<char> { 'A', 'R', 'G', 'D' }.Contains(c))
                     {
-                        'A' => Command.Avancer,
-                        'R' => Command.Reculer,
-                        'G' => Command.TournerAGauche,
-                        'D' => Command.TournerADroite,
-                        _   => throw new ArgumentException($"Commande invalide: {c}")
-                    };
-
-                    result = result is null ? next : result + next;
+                        Console.WriteLine($"La commande {c} n'est pas prise en compte et a donc été sautée.");
+                        command = command.Replace(c.ToString(), string.Empty);
+                    }
                 }
 
 

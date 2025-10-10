@@ -41,6 +41,7 @@ ScaffoldingReadMe.txt
 *~
 CodeCoverage/
 .vs/
+ExoRover.sln.DotSettings.user
 
 # MSBuild Binary and Structured Log
 *.binlog
