@@ -5,18 +5,18 @@ namespace ExoRover.Tests
 {
     public class MissionControlTest
     {
-        [Fact]  // ✅ Marque le test comme unitaire
+        [Fact]  
         public void MissionControle_Should_Fail_Parse_Commande()
         {
-            // Arrange
+         
             var missionControl = new MissionControl();
             var input = "zadfgh";
 
-            // Act & Assert
+           
             Xunit.Assert.ThrowsAny<Exception>(() => missionControl.ParseUserInput(input));
         }
 
-        [Fact]  // ✅ Important pour que le runner détecte le test
+        [Fact]  
         public void MissionControle_Should_Succeed_Parse_Commande()
         {
             // Arrange
@@ -28,10 +28,10 @@ namespace ExoRover.Tests
                            + Command.Reculer
                            + Command.Avancer;
 
-            // Act
+            
             var result = missionControl.ParseUserInput(input);
 
-            // Assert
+            
             Xunit.Assert.Equal(expected.ToString(), result.ToString());
         }
     }

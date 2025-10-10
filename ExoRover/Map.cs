@@ -5,7 +5,7 @@ public class Map
     #region Fields
 
     private string mapName;
-    private List<Obstacle> obstacles ;
+    bool [][] ObstacleMap = new bool [10][] ;
 
     #endregion
 
@@ -16,6 +16,10 @@ public class Map
         get => mapName;
         set => mapName = value;
     }
+
+   
+    
+    
     
     #endregion
 
@@ -28,6 +32,15 @@ public class Map
     public Map(string mapName)
     {
     }
+
+
+    public void AddObstacleMap(Obstacle obstacle)
+    {
+        ObstacleMap[obstacle.Positions.Longitude][obstacle.Positions.Latitude] = true;
+
+    }
+    
+    
 
     #endregion
 }
