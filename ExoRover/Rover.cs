@@ -66,7 +66,7 @@ public class Rover
         position.Longitude = p.X;
         position.Latitude  = p.Y;
 
-        return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude})";
+        return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
     }
 
     // r�cup�ration du fichier config

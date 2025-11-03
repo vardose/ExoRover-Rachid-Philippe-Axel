@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "ExoRover_Rover": {
+      "commandName": "Project",
+      "commandLineArgs": "--mode=rover"
+    },
+    "ExoRover_Control": {
+      "commandName": "Project",
+      "commandLineArgs": "--mode=control"
+    }
+  }
+}

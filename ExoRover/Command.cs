@@ -27,10 +27,10 @@ public class Orientation
     private readonly int _vecteurX;
     private readonly int _vecteurY;
 
-    public static Orientation Nord  { get; } = new(0, 1);
-    public static Orientation Sud   { get; } = new(0, -1);
+    public static Orientation Nord  { get; } = new(0, -1);
+    public static Orientation Sud   { get; } = new(0, 1);
     public static Orientation Est   { get; } = new(1, 0);
-    public static Orientation Ouest { get; } = new(0, -1);
+    public static Orientation Ouest { get; } = new(-1, 0);
 
     private Orientation(int vecteurX, int vecteurY)
     {
