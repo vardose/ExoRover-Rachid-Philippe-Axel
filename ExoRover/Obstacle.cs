@@ -9,7 +9,6 @@ public class Obstacle
     #endregion
 
     #region Properties
-
     public  Position Positions
     {
         get => position;
