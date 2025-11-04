@@ -1,10 +1,11 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using ExoRover;
 using ExoRover.Services;
 using ExoRover.UI;
 
-namespace ExoRover
+namespace MissionControl
 {
     public class MissionControl
     {

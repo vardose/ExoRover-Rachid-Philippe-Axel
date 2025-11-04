@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ExoRover\ExoRover.csproj" />
-      <ProjectReference Include="..\MissionControl\MissionControl.csproj" />
     </ItemGroup>
 
 </Project>

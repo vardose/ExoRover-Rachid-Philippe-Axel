@@ -1,13 +1,14 @@
 using System.Net.Sockets;
 using System.Text;
+using ExoRover;
 
-namespace ExoRover;
+namespace Rover;
 
 public class Rover
 {
-    private readonly Config _config;
-    Position                position    = new Position();
-    Orientation             orientation = Orientation.Nord;
+    private readonly Config      _config;
+    private          Position    position    = new Position();
+    private          Orientation orientation = Orientation.Nord;
 
     public void Run()
     {
@@ -84,7 +85,7 @@ public class Rover
         Console.WriteLine($"Connexion � {_config.Communication.Host}:{_config.Communication.RoverPort}");
         Console.WriteLine($"Position initiale: {string.Join(",", _config.RoverSettings.InitialPosition)}");
         Console.WriteLine($"Orientation initiale: {_config.RoverSettings.Orientation}");
-        
+
         return new TcpClient(_config.Communication.Host, _config.Communication.RoverPort);
     }
 }
