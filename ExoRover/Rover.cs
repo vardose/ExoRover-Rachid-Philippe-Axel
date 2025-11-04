@@ -19,6 +19,7 @@ public class Rover
 
             while (true)
             {
+                // Réception et traitement des instructions
                 byte[] buffer          = new byte[1024];
                 int    bytesRead       = stream.Read(buffer, 0, buffer.Length);
                 string commandReceived = Encoding.UTF8.GetString(buffer, 0, bytesRead);

@@ -58,6 +58,7 @@ namespace ExoRover
 
             while (true)
             {
+                // Lecture des instructions de l'utilisateur
                 Console.Write(
                     "\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, E : Exit): ");
                 string? command = Console.ReadLine();
@@ -75,6 +76,7 @@ namespace ExoRover
                 }
 
 
+                // Traitement du retour du rover
                 byte[] data = Encoding.UTF8.GetBytes(command);
                 stream.Write(data, 0, data.Length);
 
@@ -90,8 +92,25 @@ namespace ExoRover
                     int.TryParse(parts[1], out int x) &&
                     int.TryParse(parts[2], out int y))
                 {
-                    renderer.RoverX = x;
-                    renderer.RoverY = y;
+                    // Gestion de la sortie de carte pour l'affichage du rover
+                    if (x < 0)
+                    {
+                        renderer.RoverX = 9;
+                    }
+                    else
+                    {
+                        renderer.RoverX = x;
+                    }
+
+                    if (y < 0)
+                    {
+                        renderer.RoverY = 9; 
+                    }
+                    else
+                    {
+                        renderer.RoverY = y; 
+                    }
+                    
                 }
 
                 // Affichage de la carte mise à jour

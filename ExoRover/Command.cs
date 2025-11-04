@@ -31,6 +31,9 @@ public class Orientation
     public static Orientation Sud   { get; } = new(0, 1);
     public static Orientation Est   { get; } = new(1, 0);
     public static Orientation Ouest { get; } = new(-1, 0);
+    
+    // Taille par défaut de la carte
+    private const int MapSize = 10;
 
     private Orientation(int vecteurX, int vecteurY)
     {
@@ -38,8 +41,18 @@ public class Orientation
         _vecteurY = vecteurY;
     }
 
-    public Point Avancer(Point p) => new(p.X + _vecteurX, p.Y + _vecteurY);
-    public Point Reculer(Point p) => new(p.X - _vecteurX, p.Y - _vecteurY);
+    public Point Avancer(Point p)
+    {
+        int newX = (p.X + _vecteurX + MapSize) % MapSize;
+        int newY = (p.Y + _vecteurY + MapSize) % MapSize;
+        return new Point(newX, newY);
+    }
+    public Point Reculer(Point p)
+    {
+        int newX = (p.X - _vecteurX + MapSize) % MapSize;
+        int newY = (p.Y - _vecteurY + MapSize) % MapSize;
+        return new Point(newX, newY);
+    }
 
     public Orientation RotationHoraire()
     {
@@ -51,4 +64,14 @@ public class Orientation
     }
 
     public Orientation RotationAntihoraire() => RotationHoraire().RotationHoraire().RotationHoraire();
+
+    // Convertion en chaine de caractères de l'orientation du rover
+    public override string ToString()
+    {
+        if (this == Nord) return "Nord";
+        if (this == Est) return "Est";
+        if (this == Sud) return "Sud";
+        if (this == Ouest) return "Ouest";
+        return "Iconnue";
+    }
 }

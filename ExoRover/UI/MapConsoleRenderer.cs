@@ -15,6 +15,8 @@ public class MapConsoleRenderer
                 {
                     if (x == RoverX && y == RoverY)
                         Console.Write("R "); // Rover
+                    else if (map.hasObstacle(x, y))
+                        Console.Write("X "); // Obstacle (test)
                     else
                         Console.Write(". "); // Case vide
                 }
