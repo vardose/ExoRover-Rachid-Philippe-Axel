@@ -1,9 +1,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using ExoRover;
-using ExoRover.Services;
-using ExoRover.UI;
+using Rover;
+using Map;
 
 namespace MissionControl
 {
@@ -40,7 +39,7 @@ namespace MissionControl
             NetworkStream stream = client.GetStream();
             
             // Création de la carte et génération aléatoire des obstacles
-            Map map = new Map();
+            Map.Map            map       = new Map.Map();
             IObstacleGenerator generator = new RandomObstacleGenerator();
             generator.GenerateObstacles(map, 15);
 

@@ -1,4 +1,4 @@
-namespace ExoRover.UI;
+namespace Map;
 
 public class MapConsoleRenderer
 {

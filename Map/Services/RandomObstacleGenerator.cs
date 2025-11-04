@@ -1,4 +1,4 @@
-namespace ExoRover.Services;
+namespace Map;
 
 public class RandomObstacleGenerator : IObstacleGenerator
 {

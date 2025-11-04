@@ -1,4 +1,4 @@
-namespace ExoRover;
+namespace Map;
 
 public class Obstacle : IObstacle
 {

@@ -1,6 +1,4 @@
-﻿using ExoRover;
-
-namespace Rover;
+﻿namespace Rover;
 
 class Program
 {

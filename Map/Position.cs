@@ -1,26 +1,16 @@
-namespace ExoRover;
+namespace Map;
 
-public class Command
+public class Position
 {
-    private readonly string _representation;
+    public int Longitude { get; set; }
+    public int Latitude  { get; set; }
 
-    public static Command Avancer        = new("A");
-    public static Command Reculer        = new("R");
-    public static Command TournerAGauche = new("G");
-    public static Command TournerADroite = new("D");
-
-    private Command(string representation)
+    public Position(int longitude = 0, int latitude = 0)
     {
-        _representation = representation;
+        Longitude = longitude;
+        Latitude  = latitude;
     }
-
-    public static Command operator +(Command a, Command b)
-        => new(a._representation + b._representation);
-
-    public override string ToString() => _representation;
 }
-
-public record Point(int X, int Y);
 
 public class Orientation
 {
@@ -41,17 +31,17 @@ public class Orientation
         _vecteurY = vecteurY;
     }
 
-    public Point Avancer(Point p)
+    public Position Avancer(Position p)
     {
-        int newX = (p.X + _vecteurX + MapSize) % MapSize;
-        int newY = (p.Y + _vecteurY + MapSize) % MapSize;
-        return new Point(newX, newY);
+        int newX = (p.Longitude + _vecteurX + MapSize) % MapSize;
+        int newY = (p.Latitude + _vecteurY + MapSize) % MapSize;
+        return new Position(newX, newY);
     }
-    public Point Reculer(Point p)
+    public Position Reculer(Position p)
     {
-        int newX = (p.X - _vecteurX + MapSize) % MapSize;
-        int newY = (p.Y - _vecteurY + MapSize) % MapSize;
-        return new Point(newX, newY);
+        int newX = (p.Longitude - _vecteurX + MapSize) % MapSize;
+        int newY = (p.Latitude - _vecteurY + MapSize) % MapSize;
+        return new Position(newX, newY);
     }
 
     public Orientation RotationHoraire()

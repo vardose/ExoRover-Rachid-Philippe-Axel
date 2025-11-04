@@ -1,6 +1,6 @@
 using System.Net.Sockets;
 using System.Text;
-using ExoRover;
+using Map;
 
 namespace Rover;
 
@@ -56,7 +56,7 @@ public class Rover
 
     private string ExecuteCommand(Command command)
     {
-        Point p = new Point(position.Longitude, position.Latitude);
+        Position p = new Position(position.Longitude, position.Latitude);
         switch (command.ToString())
         {
             case "A": p           = orientation.Avancer(p); break;
@@ -65,8 +65,8 @@ public class Rover
             case "D": orientation = orientation.RotationHoraire(); break;
         }
 
-        position.Longitude = p.X;
-        position.Latitude  = p.Y;
+        position.Longitude = p.Longitude;
+        position.Latitude  = p.Latitude;
 
         return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
     }
