@@ -1,10 +1,10 @@
 using ExoRover;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace ExoRover.Tests;
 
-[TestSubject(typeof(Command))]
+
 public class CommandTest
 {
     [Fact]
