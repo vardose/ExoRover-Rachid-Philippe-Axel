@@ -1,8 +1,8 @@
 namespace Map;
 
-public class Obstacle : IObstacle
+public class Obstacle
 {
-    public Position Position { get; private set; }
+    public Position Position { get; }
 
     public Obstacle(int latitude, int longitude)
     {

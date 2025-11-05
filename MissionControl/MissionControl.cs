@@ -21,7 +21,8 @@ namespace MissionControl
         {
             Console.WriteLine("=== Mission Control ===");
             Console.WriteLine($"Connexion à {_config.Communication.Host}:{_config.Communication.MissionControlPort}");
-            TcpListener server = new TcpListener(IPAddress.Parse(_config.Communication.Host), _config.Communication.MissionControlPort);
+            TcpListener server = new TcpListener(IPAddress.Parse(_config.Communication.Host),
+                _config.Communication.MissionControlPort);
             server.Start();
             return server;
         }
@@ -37,11 +38,10 @@ namespace MissionControl
             TcpClient client = server.AcceptTcpClient();
             Console.WriteLine("🤖 Rover connecté !");
             NetworkStream stream = client.GetStream();
-            
+
             // Création de la carte et génération aléatoire des obstacles
-            Map.Map            map       = new Map.Map();
-            IObstacleGenerator generator = new RandomObstacleGenerator();
-            generator.GenerateObstacles(map, 15);
+            Map.Map map = new Map.Map();
+            RandomObstacleGenerator.GenerateObstacles(map, 15);
 
             // Création du renderer
             MapConsoleRenderer.MapRenderer renderer = new MapConsoleRenderer.MapRenderer();
@@ -84,11 +84,11 @@ namespace MissionControl
                 int    bytesRead = stream.Read(buffer, 0, buffer.Length);
                 string response  = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 Console.WriteLine($"[Rover] {response}");
-                
+
                 // Mise à jour de la position du rover depuis la réponse (extraction simplifiée)
                 // Exemple : réponse = "✅ Position actuelle : (3,5)"
                 string[] parts = response.Split('(', ',', ')');
-                if (parts.Length >= 3 &&
+                if (parts.Length >= 3                 &&
                     int.TryParse(parts[1], out int x) &&
                     int.TryParse(parts[2], out int y))
                 {
@@ -104,13 +104,12 @@ namespace MissionControl
 
                     if (y < 0)
                     {
-                        renderer.RoverY = 9; 
+                        renderer.RoverY = 9;
                     }
                     else
                     {
-                        renderer.RoverY = y; 
+                        renderer.RoverY = y;
                     }
-                    
                 }
 
                 // Affichage de la carte mise à jour

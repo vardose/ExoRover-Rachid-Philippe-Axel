@@ -79,7 +79,7 @@ public class Rover
     }
 
     // Connection au reseau
-    public TcpClient Initialize()
+    private TcpClient Initialize()
     {
         Console.WriteLine("=== Rover ===");
         Console.WriteLine($"Connexion � {_config.Communication.Host}:{_config.Communication.RoverPort}");

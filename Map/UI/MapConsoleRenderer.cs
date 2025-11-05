@@ -2,12 +2,12 @@ namespace Map;
 
 public class MapConsoleRenderer
 {
-    public class MapRenderer : IMapRenderer
+    public class MapRenderer
     {
         public int RoverX { get; set; } = -1;
         public int RoverY { get; set; } = -1;
 
-        public void Render(IMap map)
+        public void Render(Map map)
         {
             for (int y = 0; y < 10; y++)
             {

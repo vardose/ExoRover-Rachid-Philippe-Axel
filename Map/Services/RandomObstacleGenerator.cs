@@ -1,10 +1,10 @@
 namespace Map;
 
-public class RandomObstacleGenerator : IObstacleGenerator
+public class RandomObstacleGenerator
 {
-    private readonly Random random = new Random();
+    private static readonly Random random = new Random();
 
-    public void GenerateObstacles(IMap map, int count)
+    public static void GenerateObstacles(IMap map, int count)
     {
         int maxX = 10; // Selon ta map
         int maxY = 10;

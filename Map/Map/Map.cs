@@ -14,7 +14,7 @@ namespace Map
         }
 
         // Ajout d'un obstacle
-        public void addObstacle(IObstacle obstacle)
+        public void addObstacle(Obstacle obstacle)
         {
             int x = obstacle.Position.Longitude;
             int y = obstacle.Position.Latitude;
