@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using Rover;
 using Map;
 
@@ -56,6 +57,17 @@ namespace MissionControl
             Console.WriteLine("\nCarte initiale :");
             renderer.UpdateVisibility(roverX, roverY);
             renderer.Render(map);
+            
+            // Sérialisation de la carte en JSON
+            string mapJson = JsonSerializer.Serialize(map);
+            byte[] bytes = Encoding.UTF8.GetBytes(mapJson);
+            
+            // Envoi de la taille du message en premier (4 octets)
+            byte[] lengthPrefix = BitConverter.GetBytes(bytes.Length);
+            stream.Write(lengthPrefix, 0, lengthPrefix.Length);
+
+            // Puis envoi des données
+            stream.Write(bytes, 0, bytes.Length);
 
             while (true)
             {
@@ -91,22 +103,26 @@ namespace MissionControl
                 string response  = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 Console.WriteLine($"[Rover] {response}");
 
-                // Mise à jour de la position du rover depuis la réponse (extraction simplifiée)
-                // Exemple : réponse = "✅ Position actuelle : (3,5)"
-                string[] parts = response.Split('(', ',', ')');
-                if (parts.Length >= 3                 &&
-                    int.TryParse(parts[1], out int x) &&
-                    int.TryParse(parts[2], out int y))
+                // Recherche la dernière occurrence de "(" et "," pour prendre la vraie position du rover
+                int start = response.LastIndexOf('(');
+                int comma = response.LastIndexOf(',');
+
+                if (start >= 0 && comma > start)
                 {
-                    // Gestion de la sortie de carte pour l'affichage du rover
-                    if (x < 0)
+                    int end = response.IndexOf(')', comma);
+                    if (end > comma &&
+                        int.TryParse(response.Substring(start + 1, comma - start - 1), out int x) &&
+                        int.TryParse(response.Substring(comma + 1, end - comma - 1), out int y))
                     {
-                        renderer.RoverX = 9;
-                    }
-                    else
-                    {
-                        renderer.RoverX = x;
-                    }
+                        // Gestion de la sortie de carte pour l'affichage du rover
+                        if (x < 0)
+                        {
+                            renderer.RoverX = 9;
+                        }
+                        else
+                        {
+                            renderer.RoverX = x;
+                        }
 
                     if (y < 0)
                     {
@@ -114,7 +130,7 @@ namespace MissionControl
                     }
                     else
                     {
-                        renderer.RoverY = y;
+                        renderer.RoverY = y;}
                     }
                     
                     renderer.UpdateVisibility(x, y);
