@@ -1,10 +1,6 @@
 using Xunit;
 using Rover;
-using MissionControl;
-using System;
-using System.Net.Sockets;
 using System.Net;
-using System.IO;
 using System.Text.Json;
 
 namespace ExoRover.Tests
@@ -12,7 +8,7 @@ namespace ExoRover.Tests
     public class MissionControlTest : IDisposable
     {
         private readonly string _testConfigPath = "test_mission_control_config.json";
-        private Config _testConfig;
+        private          Config _testConfig;
 
         public MissionControlTest()
         {
@@ -21,14 +17,14 @@ namespace ExoRover.Tests
             {
                 Communication = new
                 {
-                    Host = "127.0.0.1",
+                    Host               = "127.0.0.1",
                     MissionControlPort = 8080,
-                    RoverPort = 8081
+                    RoverPort          = 8081
                 },
                 RoverSettings = new
                 {
-                    Orientation = "Nord",
-                    InitialPosition = new[] { 0, 0 },
+                    Orientation        = "Nord",
+                    InitialPosition    = new[] { 0, 0 },
                     isObstacleDetected = false
                 }
             };
@@ -80,7 +76,7 @@ namespace ExoRover.Tests
             var missionControl = new MissionControl.MissionControl(_testConfig);
 
             // Act
-            var server = missionControl.Start();
+            var server        = missionControl.Start();
             var localEndPoint = server.LocalEndpoint as IPEndPoint;
 
             // Assert
@@ -107,7 +103,7 @@ namespace ExoRover.Tests
             {
                 Communication = new CommunicationConfig
                 {
-                    Host = "127.0.0.1",
+                    Host               = "127.0.0.1",
                     MissionControlPort = -1 // Port invalide
                 }
             };
@@ -125,7 +121,7 @@ namespace ExoRover.Tests
             {
                 Communication = new CommunicationConfig
                 {
-                    Host = "invalid.host.address",
+                    Host               = "invalid.host.address",
                     MissionControlPort = 8080
                 }
             };

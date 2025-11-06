@@ -21,7 +21,7 @@ public class PositionTest
     {
         // Arrange
         int longitude = 10;
-        int latitude = 20;
+        int latitude  = 20;
 
         // Act
         var position = new Position(longitude, latitude);
@@ -39,7 +39,7 @@ public class PositionTest
 
         // Act
         position.Longitude = 15;
-        position.Latitude = 25;
+        position.Latitude  = 25;
 
         // Assert
         Assert.Equal(15, position.Longitude);

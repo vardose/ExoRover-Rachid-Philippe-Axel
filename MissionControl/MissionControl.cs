@@ -122,13 +122,17 @@ namespace MissionControl
 
                     if (y < 0)
                     {
-                        renderer.RoverY = 9; 
+                        renderer.RoverY = 9;
                     }
                     else
                     {
-                        renderer.RoverY = y; 
+                        renderer.RoverY = y;
                     }
-                    renderer.orientation = "Nord".Equals(parts[3].Trim()) ? Orientation.Nord : "Sud".Equals(parts[3].Trim()) ? Orientation.Sud : "Est".Equals(parts[3].Trim()) ? Orientation.Est : "Ouest".Equals(parts[3].Trim()) ? Orientation.Ouest : Orientation.Nord;
+
+                    renderer.orientation = "Nord".Equals(parts[3].Trim()) ? Orientation.Nord :
+                        "Sud".Equals(parts[3].Trim())                     ? Orientation.Sud :
+                        "Est".Equals(parts[3].Trim())                     ? Orientation.Est :
+                        "Ouest".Equals(parts[3].Trim())                   ? Orientation.Ouest : Orientation.Nord;
                     renderer.UpdateVisibility(x, y);
                 }
 

@@ -1,7 +1,6 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
-using System.Linq;
 using Map;
 
 namespace Rover;
@@ -11,7 +10,7 @@ public class Rover
     private readonly Config      _config;
     private          Position    position    = new Position();
     private          Orientation orientation = Orientation.Nord;
-    private Map.Map _map;
+    private          Map.Map     _map;
 
     public void Run()
     {
@@ -20,15 +19,15 @@ public class Rover
             TcpClient client = Initialize();
             Console.WriteLine("🚗 Rover connecté à Mission Control !");
             NetworkStream stream = client.GetStream();
-            
+
             // Lecture de la taille du message (4 octets)
             byte[] lengthPrefix = new byte[4];
             stream.Read(lengthPrefix, 0, 4);
             int length = BitConverter.ToInt32(lengthPrefix, 0);
 
             // Lecture des données JSON
-            byte[] bytes = new byte[length];
-            int offset = 0;
+            byte[] bytes  = new byte[length];
+            int    offset = 0;
             while (offset < length)
             {
                 offset += stream.Read(bytes, offset, length - offset);
@@ -83,8 +82,7 @@ public class Rover
             orientation = orientation.RotationAntihoraire();
             return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
         }
-        
-        
+
 
         if (command.Equals(Command.TournerADroite))
         {
@@ -102,17 +100,15 @@ public class Rover
         if (_map.hasObstacle(next.Longitude, next.Latitude))
         {
             // Position non mis a jour en cas d'obstacle detecté
-            return $"⛔ Rover arrêté en ({position.Longitude},{position.Latitude}, {orientation}) — OBSTACLE détecté en ({next.Longitude},{next.Latitude})";
+            return
+                $"⛔ Rover arrêté en ({position.Longitude},{position.Latitude}, {orientation}) — OBSTACLE détecté en ({next.Longitude},{next.Latitude})";
         }
-        
+
         position.Longitude = next.Longitude;
-        position.Latitude = next.Latitude;
+        position.Latitude  = next.Latitude;
 
         return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
     }
-
-
-
 
 
     // r�cup�ration du fichier config

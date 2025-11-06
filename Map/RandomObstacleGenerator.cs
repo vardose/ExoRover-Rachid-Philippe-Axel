@@ -4,7 +4,7 @@ public class RandomObstacleGenerator
 {
     private static readonly Random random = new Random();
 
-    public static void GenerateObstacles(IMap map, int count)
+    public static void GenerateObstacles(Map map, int count)
     {
         int maxX = 10; // Selon ta map
         int maxY = 10;

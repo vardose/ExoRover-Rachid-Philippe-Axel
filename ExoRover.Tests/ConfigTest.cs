@@ -1,7 +1,5 @@
 using Rover;
 using Xunit;
-using System;
-using System.IO;
 using System.Text.Json;
 
 namespace ExoRover.Tests;
@@ -27,14 +25,14 @@ public class ConfigTest
         {
             Communication = new
             {
-                Host = "127.0.0.1",
+                Host               = "127.0.0.1",
                 MissionControlPort = 8080,
-                RoverPort = 8081
+                RoverPort          = 8081
             },
             RoverSettings = new
             {
-                Orientation = "Nord",
-                InitialPosition = new[] { 0, 0 },
+                Orientation        = "Nord",
+                InitialPosition    = new[] { 0, 0 },
                 isObstacleDetected = false
             }
         };

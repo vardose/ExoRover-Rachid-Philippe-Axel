@@ -1,9 +1,7 @@
 using Rover;
-
 using Xunit;
 
 namespace ExoRover.Tests;
-
 
 public class CommandTest
 {
@@ -23,10 +21,10 @@ public class CommandTest
         // Arrange
         var command1 = Command.Avancer;
         var command2 = Command.TournerADroite;
-        
+
         // Act
         var result = command1 + command2;
-        
+
         // Assert
         Assert.Equal("AD", result.ToString());
     }
@@ -36,7 +34,7 @@ public class CommandTest
     {
         // Arrange & Act
         var result = Command.TournerAGauche + Command.TournerADroite + Command.Reculer + Command.Avancer;
-        
+
         // Assert
         Assert.Equal("GDRA", result.ToString());
     }

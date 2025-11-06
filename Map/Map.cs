@@ -1,6 +1,6 @@
 namespace Map
 {
-    public class Map : IMap
+    public class Map
     {
         // Tableau d'obstacles
         public bool[][] Obstacles { get; set; } = new bool[10][];

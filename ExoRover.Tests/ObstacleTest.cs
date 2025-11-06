@@ -9,7 +9,7 @@ public class ObstacleTest
     public void Obstacle_Constructor_ShouldInitializeCorrectly()
     {
         // Arrange
-        int latitude = 5;
+        int latitude  = 5;
         int longitude = 10;
 
         // Act
@@ -25,7 +25,7 @@ public class ObstacleTest
     public void Obstacle_Position_ShouldBeReadOnly()
     {
         // Arrange
-        var obstacle = new Obstacle(3, 7);
+        var obstacle         = new Obstacle(3, 7);
         var originalPosition = obstacle.Position;
 
         // Act - tentative de modifier la position (ne devrait pas être possible directement)

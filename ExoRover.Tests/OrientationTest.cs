@@ -69,9 +69,9 @@ public class OrientationTest
 
         // Act
         var result = original.RotationHoraire()
-                            .RotationHoraire()
-                            .RotationHoraire()
-                            .RotationHoraire();
+            .RotationHoraire()
+            .RotationHoraire()
+            .RotationHoraire();
 
         // Assert
         Assert.Equal(original, result);
@@ -85,9 +85,9 @@ public class OrientationTest
 
         // Act
         var result = original.RotationAntihoraire()
-                            .RotationAntihoraire()
-                            .RotationAntihoraire()
-                            .RotationAntihoraire();
+            .RotationAntihoraire()
+            .RotationAntihoraire()
+            .RotationAntihoraire();
 
         // Assert
         Assert.Equal(original, result);

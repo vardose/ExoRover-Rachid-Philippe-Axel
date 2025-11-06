@@ -1,6 +1,5 @@
 using Map;
 using Xunit;
-using System;
 
 namespace ExoRover.Tests;
 
@@ -107,8 +106,8 @@ public class MapTest
     public void Map_ImplementsIMap_ShouldHaveCorrectMethods()
     {
         // Arrange
-        IMap map      = new Map.Map();
-        var  obstacle = new Obstacle(latitude: 2, longitude: 3);
+        Map.Map map      = new Map.Map();
+        var     obstacle = new Obstacle(latitude: 2, longitude: 3);
 
         // Act
         map.addObstacle(obstacle);

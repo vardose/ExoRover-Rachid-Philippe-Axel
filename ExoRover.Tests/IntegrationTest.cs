@@ -2,8 +2,6 @@ using Map;
 using Rover;
 using MissionControl;
 using Xunit;
-using System;
-using System.Drawing;
 
 namespace ExoRover.Tests;
 

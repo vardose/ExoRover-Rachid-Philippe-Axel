@@ -1,6 +1,5 @@
 using Map;
 using Xunit;
-using System.Collections.Generic;
 
 namespace ExoRover.Tests;
 
@@ -26,6 +25,7 @@ public class RandomObstacleGeneratorTest
                     actualCount++;
             }
         }
+
         Assert.Equal(requestedCount, actualCount);
     }
 
@@ -118,7 +118,7 @@ public class RandomObstacleGeneratorTest
         // Vérifier qu'aucun obstacle n'existe en dehors des limites
         // Cette vérification est implicite car Map.hasObstacle retourne false pour les coordonnées hors limites
         // et Map.addObstacle lève une exception pour les coordonnées hors limites
-        
+
         // Si nous arrivons ici sans exception, cela signifie que tous les obstacles 
         // ont été placés dans les limites de la carte
         int actualCount = 0;
@@ -130,6 +130,7 @@ public class RandomObstacleGeneratorTest
                     actualCount++;
             }
         }
+
         Assert.True(actualCount > 0);
     }
 }

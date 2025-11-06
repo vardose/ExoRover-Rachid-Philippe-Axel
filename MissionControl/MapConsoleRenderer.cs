@@ -1,4 +1,6 @@
-namespace Map;
+using Map;
+
+namespace MissionControl;
 
 public class MapRenderer
 {
@@ -10,7 +12,7 @@ public class MapRenderer
     public         int         RoverY { get; set; } = -1;
     public         Orientation orientation = Orientation.Nord;
 
-    public void Render(Map map)
+    public void Render(Map.Map map)
     {
         for (int y = 0; y < mapHeight; y++)
         {

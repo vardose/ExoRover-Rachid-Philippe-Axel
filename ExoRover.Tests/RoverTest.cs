@@ -1,7 +1,5 @@
 using Rover;
 using Xunit;
-using System;
-using System.IO;
 using System.Text.Json;
 
 namespace ExoRover.Tests;
@@ -9,7 +7,7 @@ namespace ExoRover.Tests;
 public class RoverTest : IDisposable
 {
     private readonly string _testConfigPath = "test_rover_config.json";
-    private Config _testConfig;
+    private          Config _testConfig;
 
     public RoverTest()
     {
@@ -18,14 +16,14 @@ public class RoverTest : IDisposable
         {
             Communication = new
             {
-                Host = "127.0.0.1",
+                Host               = "127.0.0.1",
                 MissionControlPort = 8080,
-                RoverPort = 8081
+                RoverPort          = 8081
             },
             RoverSettings = new
             {
-                Orientation = "Nord",
-                InitialPosition = new[] { 0, 0 },
+                Orientation        = "Nord",
+                InitialPosition    = new[] { 0, 0 },
                 isObstacleDetected = false
             }
         };
@@ -73,7 +71,7 @@ public class RoverTest : IDisposable
         // Pour ce test, nous devons d'abord démarrer un serveur TCP de test
         // ou utiliser des mocks. Pour l'instant, nous testons seulement que 
         // la méthode peut être appelée sans exception dans certaines conditions.
-        
+
         // Ce test nécessiterait un serveur TCP en cours d'exécution pour réussir
         // Dans un vrai environnement de test, on utiliserait des intégrations tests
         // ou des mocks pour simuler la connexion réseau.
