@@ -5,7 +5,7 @@ class Program
     static void Main(string[] args)
     {
         Config config = Config.Load();
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        Console.OutputEncoding = System.Text.Encoding.GetEncoding(28591);
         Rover rover = new Rover(config);
         rover.Run();
     }

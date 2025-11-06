@@ -64,6 +64,8 @@ public class Rover
             case "G": orientation = orientation.RotationAntihoraire(); break;
             case "D": orientation = orientation.RotationHoraire(); break;
         }
+        
+        
 
         position.Longitude = p.Longitude;
         position.Latitude  = p.Latitude;

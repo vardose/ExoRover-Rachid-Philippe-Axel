@@ -5,7 +5,7 @@ public class Position
     public int Longitude { get; set; }
     public int Latitude  { get; set; }
 
-    public Position(int longitude = 0, int latitude = 0)
+    public Position(int longitude = 5, int latitude = 5)
     {
         Longitude = longitude;
         Latitude  = latitude;

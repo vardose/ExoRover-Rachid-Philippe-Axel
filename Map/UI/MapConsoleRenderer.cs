@@ -1,27 +1,48 @@
 namespace Map;
 
-public class MapConsoleRenderer
+public class MapRenderer
 {
-    public class MapRenderer
-    {
-        public int RoverX { get; set; } = -1;
-        public int RoverY { get; set; } = -1;
+    private const  int     mapWidth      = 10;
+    private const  int     mapHeight     = 10;
+    private static char[,] mapData       = new char[10, 10];
+    private static bool[,] visibilityMap = new bool[10, 10];
+    public         int     RoverX { get; set; } = -1;
+    public         int     RoverY { get; set; } = -1;
 
-        public void Render(Map map)
+    public void Render(Map map)
+    {
+        for (int y = 0; y < mapHeight; y++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int x = 0; x < mapWidth; x++)
             {
-                for (int x = 0; x < 10; x++)
+                if (map.hasObstacle(x, y) && visibilityMap[x, y])
+                    mapData[x, y] = 'X';
+                else if (visibilityMap[x, y])
                 {
-                    if (x == RoverX && y == RoverY)
-                        Console.Write("R "); // Rover
-                    else if (map.hasObstacle(x, y))
-                        Console.Write("X "); // Obstacle (test)
-                    else
-                        Console.Write(". "); // Case vide
+                    mapData[x, y] = '.';
+
+                    if (RoverX == x && RoverY == y)
+                        mapData[x, y] = 'R';
                 }
-                Console.WriteLine();
+
+                Console.Write(visibilityMap[x, y] ? mapData[x, y] : '?');
+                Console.Write(" ");
             }
+
+            Console.WriteLine();
+        }
+    }
+
+    public void UpdateVisibility(int playerX, int playerY, int radius = 1)
+    {
+        RoverX = playerX;
+        RoverY = playerY;
+        for (int y = playerY - radius; y <= playerY + radius; y++)
+        {
+            for (int x = playerX - radius; x <= playerX + radius; x++)
+                // Check bounds to prevent errors
+                if (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight)
+                    visibilityMap[x, y] = true;
         }
     }
 }
