@@ -2,12 +2,13 @@ namespace Map;
 
 public class MapRenderer
 {
-    private const  int     mapWidth      = 10;
-    private const  int     mapHeight     = 10;
-    private static char[,] mapData       = new char[10, 10];
-    private static bool[,] visibilityMap = new bool[10, 10];
-    public         int     RoverX { get; set; } = -1;
-    public         int     RoverY { get; set; } = -1;
+    private const  int         mapWidth      = 10;
+    private const  int         mapHeight     = 10;
+    private static char[,]     mapData       = new char[10, 10];
+    private static bool[,]     visibilityMap = new bool[10, 10];
+    public         int         RoverX { get; set; } = -1;
+    public         int         RoverY { get; set; } = -1;
+    public         Orientation orientation = Orientation.Nord;
 
     public void Render(Map map)
     {
@@ -22,7 +23,12 @@ public class MapRenderer
                     mapData[x, y] = '.';
 
                     if (RoverX == x && RoverY == y)
-                        mapData[x, y] = 'R';
+                    {
+                        if (orientation == Orientation.Nord) mapData[x, y]  = '^';
+                        if (orientation == Orientation.Est) mapData[x, y]   = '>';
+                        if (orientation == Orientation.Sud) mapData[x, y]   = 'v';
+                        if (orientation == Orientation.Ouest) mapData[x, y] = '<';
+                    }
                 }
 
                 Console.Write(visibilityMap[x, y] ? mapData[x, y] : '?');

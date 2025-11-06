@@ -57,11 +57,11 @@ namespace MissionControl
             Console.WriteLine("\nCarte initiale :");
             renderer.UpdateVisibility(roverX, roverY);
             renderer.Render(map);
-            
+
             // Sérialisation de la carte en JSON
             string mapJson = JsonSerializer.Serialize(map);
-            byte[] bytes = Encoding.UTF8.GetBytes(mapJson);
-            
+            byte[] bytes   = Encoding.UTF8.GetBytes(mapJson);
+
             // Envoi de la taille du message en premier (4 octets)
             byte[] lengthPrefix = BitConverter.GetBytes(bytes.Length);
             stream.Write(lengthPrefix, 0, lengthPrefix.Length);
@@ -103,36 +103,32 @@ namespace MissionControl
                 string response  = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 Console.WriteLine($"[Rover] {response}");
 
-                // Recherche la dernière occurrence de "(" et "," pour prendre la vraie position du rover
-                int start = response.LastIndexOf('(');
-                int comma = response.LastIndexOf(',');
-
-                if (start >= 0 && comma > start)
+                // Mise à jour de la position du rover depuis la réponse (extraction simplifiée)
+                // Exemple : réponse = "✅ Position actuelle : (3,5)"
+                string[] parts = response.Split('(', ',', ')');
+                if (parts.Length >= 3                 &&
+                    int.TryParse(parts[1], out int x) &&
+                    int.TryParse(parts[2], out int y))
                 {
-                    int end = response.IndexOf(')', comma);
-                    if (end > comma &&
-                        int.TryParse(response.Substring(start + 1, comma - start - 1), out int x) &&
-                        int.TryParse(response.Substring(comma + 1, end - comma - 1), out int y))
+                    // Gestion de la sortie de carte pour l'affichage du rover
+                    if (x < 0)
                     {
-                        // Gestion de la sortie de carte pour l'affichage du rover
-                        if (x < 0)
-                        {
-                            renderer.RoverX = 9;
-                        }
-                        else
-                        {
-                            renderer.RoverX = x;
-                        }
-
-                    if (y < 0)
-                    {
-                        renderer.RoverY = 9;
+                        renderer.RoverX = 9;
                     }
                     else
                     {
-                        renderer.RoverY = y;}
+                        renderer.RoverX = x;
                     }
-                    
+
+                    if (y < 0)
+                    {
+                        renderer.RoverY = 9; 
+                    }
+                    else
+                    {
+                        renderer.RoverY = y; 
+                    }
+                    renderer.orientation = "Nord".Equals(parts[3].Trim()) ? Orientation.Nord : "Sud".Equals(parts[3].Trim()) ? Orientation.Sud : "Est".Equals(parts[3].Trim()) ? Orientation.Est : "Ouest".Equals(parts[3].Trim()) ? Orientation.Ouest : Orientation.Nord;
                     renderer.UpdateVisibility(x, y);
                 }
 

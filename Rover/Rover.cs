@@ -102,7 +102,7 @@ public class Rover
         if (_map.hasObstacle(next.Longitude, next.Latitude))
         {
             // Position non mis a jour en cas d'obstacle detecté
-            return $"⛔ OBSTACLE détecté en ({next.Longitude},{next.Latitude}) — rover arrêté en ({position.Longitude},{position.Latitude})";
+            return $"⛔ Rover arrêté en ({position.Longitude},{position.Latitude}, {orientation}) — OBSTACLE détecté en ({next.Longitude},{next.Latitude})";
         }
         
         position.Longitude = next.Longitude;

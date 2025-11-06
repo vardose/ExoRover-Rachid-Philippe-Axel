@@ -21,7 +21,7 @@ public class Orientation
     public static Orientation Sud   { get; } = new(0, 1);
     public static Orientation Est   { get; } = new(1, 0);
     public static Orientation Ouest { get; } = new(-1, 0);
-    
+
     // Taille par défaut de la carte
     private const int MapSize = 10;
 
@@ -34,13 +34,14 @@ public class Orientation
     public Position Avancer(Position p)
     {
         int newX = (p.Longitude + _vecteurX + MapSize) % MapSize;
-        int newY = (p.Latitude + _vecteurY + MapSize) % MapSize;
+        int newY = (p.Latitude  + _vecteurY + MapSize) % MapSize;
         return new Position(newX, newY);
     }
+
     public Position Reculer(Position p)
     {
         int newX = (p.Longitude - _vecteurX + MapSize) % MapSize;
-        int newY = (p.Latitude - _vecteurY + MapSize) % MapSize;
+        int newY = (p.Latitude  - _vecteurY + MapSize) % MapSize;
         return new Position(newX, newY);
     }
 
@@ -50,6 +51,7 @@ public class Orientation
         if (this == Est) return Sud;
         if (this == Sud) return Ouest;
         if (this == Ouest) return Nord;
+
         throw new InvalidDataException();
     }
 
