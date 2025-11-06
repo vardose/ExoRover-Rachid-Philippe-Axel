@@ -44,16 +44,17 @@ namespace MissionControl
             RandomObstacleGenerator.GenerateObstacles(map, 15);
 
             // Création du renderer
-            MapConsoleRenderer.MapRenderer renderer = new MapConsoleRenderer.MapRenderer();
+            MapRenderer renderer = new MapRenderer();
 
             // Position initiale du rover (supposons que tu l'as depuis Config)
-            int roverX = 0; // ou _config.RoverSettings.InitialPosition[0]
-            int roverY = 0; // ou _config.RoverSettings.InitialPosition[1]
+            int roverX = 5; // ou _config.RoverSettings.InitialPosition[0]
+            int roverY = 5; // ou _config.RoverSettings.InitialPosition[1]
             renderer.RoverX = roverX;
             renderer.RoverY = roverY;
 
             // Affichage initial de la carte
             Console.WriteLine("\nCarte initiale :");
+            renderer.UpdateVisibility(roverX, roverY);
             renderer.Render(map);
 
             while (true)
@@ -61,12 +62,16 @@ namespace MissionControl
                 // Lecture des instructions de l'utilisateur
                 Console.Write(
                     "\nCommande à envoyer (ex: A : Avancer, R : Reculer, G : Tourner à gauche, D : Tourner à droite, E : Exit): ");
-                string? command = Console.ReadLine();
+                string? command = Console.ReadKey(true).Key.ToString();
+                Console.Clear();
 
                 if (string.IsNullOrWhiteSpace(command))
                     continue;
                 if (command.Equals("E"))
+                {
+                    Console.Write($"Programme terminé.");
                     break;
+                }
 
                 foreach (char c in command.ToUpper())
                 {
@@ -76,6 +81,7 @@ namespace MissionControl
                 }
 
 
+                if (string.IsNullOrWhiteSpace(command)) continue;
                 // Traitement du retour du rover
                 byte[] data = Encoding.UTF8.GetBytes(command);
                 stream.Write(data, 0, data.Length);
@@ -110,6 +116,8 @@ namespace MissionControl
                     {
                         renderer.RoverY = y;
                     }
+                    
+                    renderer.UpdateVisibility(x, y);
                 }
 
                 // Affichage de la carte mise à jour
