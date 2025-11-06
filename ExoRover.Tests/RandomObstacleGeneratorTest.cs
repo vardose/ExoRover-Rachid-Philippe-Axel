@@ -1,5 +1,4 @@
-using ExoRover.Services;
-using ExoRover;
+using Map;
 using Xunit;
 using System.Collections.Generic;
 
@@ -11,12 +10,11 @@ public class RandomObstacleGeneratorTest
     public void GenerateObstacles_ShouldCreateRequestedNumberOfObstacles()
     {
         // Arrange
-        var generator = new RandomObstacleGenerator();
-        var map = new Map();
+        var map            = new Map.Map();
         int requestedCount = 5;
 
         // Act
-        generator.GenerateObstacles(map, requestedCount);
+        RandomObstacleGenerator.GenerateObstacles(map, requestedCount);
 
         // Assert
         int actualCount = 0;
@@ -35,11 +33,10 @@ public class RandomObstacleGeneratorTest
     public void GenerateObstacles_WithZeroCount_ShouldCreateNoObstacles()
     {
         // Arrange
-        var generator = new RandomObstacleGenerator();
-        var map = new Map();
+        var map = new Map.Map();
 
         // Act
-        generator.GenerateObstacles(map, 0);
+        RandomObstacleGenerator.GenerateObstacles(map, 0);
 
         // Assert
         for (int x = 0; x < 10; x++)
@@ -55,12 +52,11 @@ public class RandomObstacleGeneratorTest
     public void GenerateObstacles_ShouldNotCreateDuplicateObstacles()
     {
         // Arrange
-        var generator = new RandomObstacleGenerator();
-        var map = new Map();
+        var map            = new Map.Map();
         int requestedCount = 10;
 
         // Act
-        generator.GenerateObstacles(map, requestedCount);
+        RandomObstacleGenerator.GenerateObstacles(map, requestedCount);
 
         // Assert
         var obstaclePositions = new HashSet<(int, int)>();
@@ -82,12 +78,11 @@ public class RandomObstacleGeneratorTest
     public void GenerateObstacles_WithMaxCount_ShouldFillEntireMap()
     {
         // Arrange
-        var generator = new RandomObstacleGenerator();
-        var map = new Map();
+        var map                  = new Map.Map();
         int maxPossibleObstacles = 100; // 10x10 map
 
         // Act
-        generator.GenerateObstacles(map, maxPossibleObstacles);
+        RandomObstacleGenerator.GenerateObstacles(map, maxPossibleObstacles);
 
         // Assert
         for (int x = 0; x < 10; x++)
@@ -103,23 +98,21 @@ public class RandomObstacleGeneratorTest
     public void GenerateObstacles_ImplementsIObstacleGenerator()
     {
         // Arrange
-        IObstacleGenerator generator = new RandomObstacleGenerator();
-        var map = new Map();
+        var map = new Map.Map();
 
         // Act & Assert - Should not throw
-        generator.GenerateObstacles(map, 3);
+        RandomObstacleGenerator.GenerateObstacles(map, 3);
     }
 
     [Fact]
     public void GenerateObstacles_ShouldGenerateWithinMapBounds()
     {
         // Arrange
-        var generator = new RandomObstacleGenerator();
-        var map = new Map();
+        var map            = new Map.Map();
         int requestedCount = 20;
 
         // Act
-        generator.GenerateObstacles(map, requestedCount);
+        RandomObstacleGenerator.GenerateObstacles(map, requestedCount);
 
         // Assert
         // Vérifier qu'aucun obstacle n'existe en dehors des limites

@@ -1,4 +1,4 @@
-using ExoRover;
+using Rover;
 using Xunit;
 using System;
 using System.IO;
@@ -47,7 +47,7 @@ public class RoverTest : IDisposable
     public void Rover_Constructor_ShouldInitializeCorrectly()
     {
         // Act
-        var rover = new Rover(_testConfig);
+        var rover = new Rover.Rover(_testConfig);
 
         // Assert
         Assert.NotNull(rover);
@@ -57,7 +57,7 @@ public class RoverTest : IDisposable
     public void Rover_Constructor_WithNullConfig_ShouldThrowException()
     {
         // Act & Assert
-        Assert.ThrowsAny<Exception>(() => new Rover(null));
+        Assert.ThrowsAny<Exception>(() => new Rover.Rover(null));
     }
 
     // Note: Les tests pour Initialize() et Run() sont complexes car ils impliquent 
@@ -68,7 +68,7 @@ public class RoverTest : IDisposable
     public void Rover_Initialize_ShouldReturnTcpClient()
     {
         // Arrange
-        var rover = new Rover(_testConfig);
+        var rover = new Rover.Rover(_testConfig);
 
         // Pour ce test, nous devons d'abord démarrer un serveur TCP de test
         // ou utiliser des mocks. Pour l'instant, nous testons seulement que 
@@ -80,7 +80,7 @@ public class RoverTest : IDisposable
 
         // Act & Assert
         // Nous savons que cela va lever une exception car aucun serveur n'écoute
-        Assert.ThrowsAny<Exception>(() => rover.Initialize());
+        Assert.ThrowsAny<Exception>(() => rover);
     }
 
     // Tests pour la logique métier que nous pouvons extraire et tester
@@ -91,7 +91,7 @@ public class RoverTest : IDisposable
     public void Rover_ConfigurationAccess_ShouldHaveCorrectValues()
     {
         // Arrange
-        var rover = new Rover(_testConfig);
+        var rover = new Rover.Rover(_testConfig);
 
         // Note: Pour tester ceci, il faudrait exposer _config ou créer des méthodes
         // publiques pour accéder aux valeurs de configuration. Actuellement,

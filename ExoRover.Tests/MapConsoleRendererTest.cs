@@ -1,5 +1,4 @@
-using ExoRover.UI;
-using ExoRover;
+using Map;
 using Xunit;
 using System;
 using System.IO;
@@ -12,7 +11,7 @@ public class MapConsoleRendererTest
     public void MapRenderer_Constructor_ShouldInitializeWithDefaultValues()
     {
         // Act
-        var renderer = new MapConsoleRenderer.MapRenderer();
+        var renderer = new MapRenderer();
 
         // Assert
         Assert.Equal(-1, renderer.RoverX);
@@ -23,7 +22,7 @@ public class MapConsoleRendererTest
     public void MapRenderer_SetRoverPosition_ShouldUpdateCorrectly()
     {
         // Arrange
-        var renderer = new MapConsoleRenderer.MapRenderer();
+        var renderer = new MapRenderer();
 
         // Act
         renderer.RoverX = 5;
@@ -38,8 +37,8 @@ public class MapConsoleRendererTest
     public void MapRenderer_Render_ShouldNotThrowException()
     {
         // Arrange
-        var renderer = new MapConsoleRenderer.MapRenderer();
-        var map = new Map();
+        var renderer = new MapRenderer();
+        var map      = new Map.Map();
 
         // Act & Assert - Should not throw
         renderer.Render(map);
@@ -49,8 +48,8 @@ public class MapConsoleRendererTest
     public void MapRenderer_Render_WithRoverPosition_ShouldNotThrowException()
     {
         // Arrange
-        var renderer = new MapConsoleRenderer.MapRenderer();
-        var map = new Map();
+        var renderer = new MapRenderer();
+        var map      = new Map.Map();
         renderer.RoverX = 2;
         renderer.RoverY = 4;
 
@@ -62,8 +61,8 @@ public class MapConsoleRendererTest
     public void MapRenderer_ImplementsIMapRenderer()
     {
         // Arrange
-        IMapRenderer renderer = new MapConsoleRenderer.MapRenderer();
-        var map = new Map();
+        MapRenderer renderer = new MapRenderer();
+        var         map      = new Map.Map();
 
         // Act & Assert - Should not throw
         renderer.Render(map);
@@ -73,8 +72,8 @@ public class MapConsoleRendererTest
     public void MapRenderer_Render_WithObstacles_ShouldNotThrowException()
     {
         // Arrange
-        var renderer = new MapConsoleRenderer.MapRenderer();
-        var map = new Map();
+        var renderer = new MapRenderer();
+        var map      = new Map.Map();
         map.addObstacle(new Obstacle(2, 3));
         map.addObstacle(new Obstacle(5, 7));
 
@@ -86,13 +85,13 @@ public class MapConsoleRendererTest
     public void MapRenderer_Render_CaptureOutput_ShouldContainExpectedContent()
     {
         // Arrange
-        var renderer = new MapConsoleRenderer.MapRenderer();
-        var map = new Map();
+        var renderer = new MapRenderer();
+        var map      = new Map.Map();
         renderer.RoverX = 0;
         renderer.RoverY = 0;
 
         // Capture console output
-        var originalOut = Console.Out;
+        var       originalOut  = Console.Out;
         using var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
@@ -117,11 +116,11 @@ public class MapConsoleRendererTest
     public void MapRenderer_Render_WithoutRover_ShouldOnlyShowDots()
     {
         // Arrange
-        var renderer = new MapConsoleRenderer.MapRenderer(); // RoverX = -1, RoverY = -1 par défaut
-        var map = new Map();
+        var renderer = new MapRenderer(); // RoverX = -1, RoverY = -1 par défaut
+        var map      = new Map.Map();
 
         // Capture console output
-        var originalOut = Console.Out;
+        var       originalOut  = Console.Out;
         using var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
@@ -133,7 +132,7 @@ public class MapConsoleRendererTest
             // Assert
             var output = stringWriter.ToString();
             Assert.DoesNotContain("R", output); // Pas de rover affiché
-            Assert.Contains(".", output); // Seulement des points
+            Assert.Contains(".", output);       // Seulement des points
         }
         finally
         {

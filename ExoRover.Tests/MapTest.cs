@@ -1,4 +1,4 @@
-using ExoRover;
+using Map;
 using Xunit;
 using System;
 
@@ -10,7 +10,7 @@ public class MapTest
     public void Map_Constructor_ShouldInitializeEmptyMap()
     {
         // Act
-        var map = new Map();
+        var map = new Map.Map();
 
         // Assert
         Assert.NotNull(map);
@@ -28,7 +28,7 @@ public class MapTest
     public void Map_AddObstacle_ShouldPlaceObstacleCorrectly()
     {
         // Arrange
-        var map = new Map();
+        var map      = new Map.Map();
         var obstacle = new Obstacle(latitude: 3, longitude: 5);
 
         // Act
@@ -42,7 +42,7 @@ public class MapTest
     public void Map_AddMultipleObstacles_ShouldPlaceAllCorrectly()
     {
         // Arrange
-        var map = new Map();
+        var map       = new Map.Map();
         var obstacle1 = new Obstacle(latitude: 1, longitude: 2);
         var obstacle2 = new Obstacle(latitude: 5, longitude: 7);
 
@@ -60,7 +60,7 @@ public class MapTest
     public void Map_AddObstacle_OutOfBounds_ShouldThrowArgumentOutOfRangeException()
     {
         // Arrange
-        var map = new Map();
+        var map                 = new Map.Map();
         var obstacleOutOfBounds = new Obstacle(latitude: 15, longitude: 20); // Hors limites
 
         // Act & Assert
@@ -71,7 +71,7 @@ public class MapTest
     public void Map_AddObstacle_NegativeCoordinates_ShouldThrowArgumentOutOfRangeException()
     {
         // Arrange
-        var map = new Map();
+        var map              = new Map.Map();
         var obstacleNegative = new Obstacle(latitude: -1, longitude: -1);
 
         // Act & Assert
@@ -82,7 +82,7 @@ public class MapTest
     public void Map_HasObstacle_OutOfBounds_ShouldReturnFalse()
     {
         // Arrange
-        var map = new Map();
+        var map = new Map.Map();
 
         // Act & Assert
         Assert.False(map.hasObstacle(-1, -1));
@@ -95,7 +95,7 @@ public class MapTest
     public void Map_HasObstacle_ValidEmptyPosition_ShouldReturnFalse()
     {
         // Arrange
-        var map = new Map();
+        var map = new Map.Map();
 
         // Act & Assert
         Assert.False(map.hasObstacle(5, 5));
@@ -107,8 +107,8 @@ public class MapTest
     public void Map_ImplementsIMap_ShouldHaveCorrectMethods()
     {
         // Arrange
-        IMap map = new Map();
-        var obstacle = new Obstacle(latitude: 2, longitude: 3);
+        IMap map      = new Map.Map();
+        var  obstacle = new Obstacle(latitude: 2, longitude: 3);
 
         // Act
         map.addObstacle(obstacle);
@@ -121,11 +121,11 @@ public class MapTest
     public void Map_AddObstacle_AtBoundaries_ShouldWork()
     {
         // Arrange
-        var map = new Map();
-        var obstacle1 = new Obstacle(latitude: 0, longitude: 0);   // Coin supérieur gauche
-        var obstacle2 = new Obstacle(latitude: 9, longitude: 9);   // Coin inférieur droit
-        var obstacle3 = new Obstacle(latitude: 0, longitude: 9);   // Coin supérieur droit
-        var obstacle4 = new Obstacle(latitude: 9, longitude: 0);   // Coin inférieur gauche
+        var map       = new Map.Map();
+        var obstacle1 = new Obstacle(latitude: 0, longitude: 0); // Coin supérieur gauche
+        var obstacle2 = new Obstacle(latitude: 9, longitude: 9); // Coin inférieur droit
+        var obstacle3 = new Obstacle(latitude: 0, longitude: 9); // Coin supérieur droit
+        var obstacle4 = new Obstacle(latitude: 9, longitude: 0); // Coin inférieur gauche
 
         // Act
         map.addObstacle(obstacle1);

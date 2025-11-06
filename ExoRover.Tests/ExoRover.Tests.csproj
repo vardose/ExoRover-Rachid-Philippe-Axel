@@ -18,6 +18,12 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Map\Map.csproj" />
+      <ProjectReference Include="..\MissionControl\MissionControl.csproj" />
+      <ProjectReference Include="..\Rover\Rover.csproj" />
+    </ItemGroup>
+
     
 
 </Project>

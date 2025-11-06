@@ -1,6 +1,9 @@
-using ExoRover;
+using Map;
+using Rover;
+using MissionControl;
 using Xunit;
 using System;
+using System.Drawing;
 
 namespace ExoRover.Tests;
 
@@ -15,10 +18,10 @@ public class IntegrationTest
         // Ce test nécessiterait l'accès à la logique interne du Rover
         // ou une refactorisation pour exposer la logique de commande
         // Pour l'instant, nous testons que le rover peut être créé
-        
+
         // Arrange
         var config = CreateTestConfig();
-        var rover = new Rover(config);
+        var rover  = new Rover.Rover(config);
 
         // Assert
         Assert.NotNull(rover);
@@ -28,7 +31,7 @@ public class IntegrationTest
     public void Map_And_Obstacle_Integration_ShouldWork()
     {
         // Arrange
-        var map = new Map();
+        var map       = new Map.Map();
         var obstacle1 = new Obstacle(2, 3);
         var obstacle2 = new Obstacle(5, 7);
 
@@ -46,11 +49,10 @@ public class IntegrationTest
     public void RandomObstacleGenerator_And_Map_Integration_ShouldWork()
     {
         // Arrange
-        var map = new Map();
-        var generator = new ExoRover.Services.RandomObstacleGenerator();
+        var map = new Map.Map();
 
         // Act
-        generator.GenerateObstacles(map, 5);
+        RandomObstacleGenerator.GenerateObstacles(map, 5);
 
         // Assert
         int obstacleCount = 0;
@@ -62,6 +64,7 @@ public class IntegrationTest
                     obstacleCount++;
             }
         }
+
         Assert.Equal(5, obstacleCount);
     }
 
@@ -69,29 +72,29 @@ public class IntegrationTest
     public void Orientation_Command_Flow_ShouldWork()
     {
         // Arrange
-        var startPoint = new Point(5, 5);
+        var startPoint  = new Position(5, 5);
         var orientation = Orientation.Nord;
 
         // Act - Simuler une séquence de commandes
-        var afterMove = orientation.Avancer(startPoint);           // (5, 4)
-        var newOrientation = orientation.RotationHoraire();        // Est
-        var afterTurn = newOrientation.Avancer(afterMove);        // (6, 4)
+        var afterMove      = orientation.Avancer(startPoint);   // (5, 4)
+        var newOrientation = orientation.RotationHoraire();     // Est
+        var afterTurn      = newOrientation.Avancer(afterMove); // (6, 4)
 
         // Assert
-        Assert.Equal(new Point(5, 4), afterMove);
+        Assert.Equal(new Position(5, 4), afterMove);
         Assert.Equal(Orientation.Est, newOrientation);
-        Assert.Equal(new Point(6, 4), afterTurn);
+        Assert.Equal(new Position(6, 4), afterTurn);
     }
 
     [Fact]
     public void MapRenderer_Integration_ShouldRenderWithoutError()
     {
         // Arrange
-        var map = new Map();
+        var map      = new Map.Map();
         var obstacle = new Obstacle(2, 3);
         map.addObstacle(obstacle);
 
-        var renderer = new ExoRover.UI.MapConsoleRenderer.MapRenderer();
+        var renderer = new MapRenderer();
         renderer.RoverX = 1;
         renderer.RoverY = 1;
 
@@ -105,14 +108,14 @@ public class IntegrationTest
         {
             Communication = new CommunicationConfig
             {
-                Host = "127.0.0.1",
+                Host               = "127.0.0.1",
                 MissionControlPort = 8080,
-                RoverPort = 8081
+                RoverPort          = 8081
             },
             RoverSettings = new RoverSettingsConfig
             {
-                Orientation = "Nord",
-                InitialPosition = new List<int> { 0, 0 },
+                Orientation        = "Nord",
+                InitialPosition    = new List<int> { 0, 0 },
                 isObstacleDetected = false
             }
         };

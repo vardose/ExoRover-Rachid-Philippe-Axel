@@ -1,4 +1,4 @@
-using ExoRover;
+using Map;
 using Xunit;
 
 namespace ExoRover.Tests;
@@ -19,26 +19,26 @@ public class OrientationTest
     public void Orientation_Avancer_ShouldMoveForwardCorrectly()
     {
         // Arrange
-        var startPoint = new Point(5, 5);
+        var startPosition = new Position(5, 5);
 
         // Act & Assert
-        Assert.Equal(new Point(5, 4), Orientation.Nord.Avancer(startPoint));  // Nord: Y diminue
-        Assert.Equal(new Point(5, 6), Orientation.Sud.Avancer(startPoint));   // Sud: Y augmente
-        Assert.Equal(new Point(6, 5), Orientation.Est.Avancer(startPoint));   // Est: X augmente
-        Assert.Equal(new Point(4, 5), Orientation.Ouest.Avancer(startPoint)); // Ouest: X diminue
+        Assert.Equal(new Position(5, 4), Orientation.Nord.Avancer(startPosition));  // Nord: Y diminue
+        Assert.Equal(new Position(5, 6), Orientation.Sud.Avancer(startPosition));   // Sud: Y augmente
+        Assert.Equal(new Position(6, 5), Orientation.Est.Avancer(startPosition));   // Est: X augmente
+        Assert.Equal(new Position(4, 5), Orientation.Ouest.Avancer(startPosition)); // Ouest: X diminue
     }
 
     [Fact]
     public void Orientation_Reculer_ShouldMoveBackwardCorrectly()
     {
         // Arrange
-        var startPoint = new Point(5, 5);
+        var startPosition = new Position(5, 5);
 
         // Act & Assert
-        Assert.Equal(new Point(5, 6), Orientation.Nord.Reculer(startPoint));  // Nord: Y augmente (inverse)
-        Assert.Equal(new Point(5, 4), Orientation.Sud.Reculer(startPoint));   // Sud: Y diminue (inverse)
-        Assert.Equal(new Point(4, 5), Orientation.Est.Reculer(startPoint));   // Est: X diminue (inverse)
-        Assert.Equal(new Point(6, 5), Orientation.Ouest.Reculer(startPoint)); // Ouest: X augmente (inverse)
+        Assert.Equal(new Position(5, 6), Orientation.Nord.Reculer(startPosition));  // Nord: Y augmente (inverse)
+        Assert.Equal(new Position(5, 4), Orientation.Sud.Reculer(startPosition));   // Sud: Y diminue (inverse)
+        Assert.Equal(new Position(4, 5), Orientation.Est.Reculer(startPosition));   // Est: X diminue (inverse)
+        Assert.Equal(new Position(6, 5), Orientation.Ouest.Reculer(startPosition)); // Ouest: X augmente (inverse)
     }
 
     [Fact]

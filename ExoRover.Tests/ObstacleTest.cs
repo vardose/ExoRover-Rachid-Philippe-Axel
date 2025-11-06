@@ -1,4 +1,4 @@
-using ExoRover;
+using Map;
 using Xunit;
 
 namespace ExoRover.Tests;
@@ -61,7 +61,7 @@ public class ObstacleTest
     public void Obstacle_ImplementsIObstacle_ShouldHavePositionProperty()
     {
         // Arrange
-        IObstacle obstacle = new Obstacle(2, 4);
+        Obstacle obstacle = new Obstacle(2, 4);
 
         // Assert
         Assert.NotNull(obstacle.Position);

@@ -1,5 +1,6 @@
 using Xunit;
-using ExoRover;
+using Rover;
+using MissionControl;
 using System;
 using System.Net.Sockets;
 using System.Net;
@@ -49,7 +50,7 @@ namespace ExoRover.Tests
         public void MissionControl_Constructor_ShouldInitializeCorrectly()
         {
             // Act
-            var missionControl = new MissionControl(_testConfig);
+            var missionControl = new MissionControl.MissionControl(_testConfig);
 
             // Assert
             Assert.NotNull(missionControl);
@@ -59,7 +60,7 @@ namespace ExoRover.Tests
         public void MissionControl_Start_ShouldCreateTcpListener()
         {
             // Arrange
-            var missionControl = new MissionControl(_testConfig);
+            var missionControl = new MissionControl.MissionControl(_testConfig);
 
             // Act
             var server = missionControl.Start();
@@ -76,7 +77,7 @@ namespace ExoRover.Tests
         public void MissionControl_Start_ShouldListenOnCorrectEndpoint()
         {
             // Arrange
-            var missionControl = new MissionControl(_testConfig);
+            var missionControl = new MissionControl.MissionControl(_testConfig);
 
             // Act
             var server = missionControl.Start();
@@ -95,7 +96,7 @@ namespace ExoRover.Tests
         public void MissionControl_Constructor_WithNullConfig_ShouldThrowException()
         {
             // Act & Assert
-            Assert.ThrowsAny<Exception>(() => new MissionControl(null));
+            Assert.ThrowsAny<Exception>(() => new MissionControl.MissionControl(null));
         }
 
         [Fact]
@@ -110,7 +111,7 @@ namespace ExoRover.Tests
                     MissionControlPort = -1 // Port invalide
                 }
             };
-            var missionControl = new MissionControl(invalidConfig);
+            var missionControl = new MissionControl.MissionControl(invalidConfig);
 
             // Act & Assert
             Assert.ThrowsAny<Exception>(() => missionControl.Start());
@@ -128,7 +129,7 @@ namespace ExoRover.Tests
                     MissionControlPort = 8080
                 }
             };
-            var missionControl = new MissionControl(invalidConfig);
+            var missionControl = new MissionControl.MissionControl(invalidConfig);
 
             // Act & Assert
             Assert.ThrowsAny<Exception>(() => missionControl.Start());
