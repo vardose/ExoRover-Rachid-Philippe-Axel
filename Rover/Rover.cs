@@ -1,5 +1,7 @@
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using System.Linq;
 using Map;
 
 namespace Rover;
@@ -9,6 +11,7 @@ public class Rover
     private readonly Config      _config;
     private          Position    position    = new Position();
     private          Orientation orientation = Orientation.Nord;
+    private Map.Map _map;
 
     public void Run()
     {
@@ -17,6 +20,22 @@ public class Rover
             TcpClient client = Initialize();
             Console.WriteLine("🚗 Rover connecté à Mission Control !");
             NetworkStream stream = client.GetStream();
+            
+            // Lecture de la taille du message (4 octets)
+            byte[] lengthPrefix = new byte[4];
+            stream.Read(lengthPrefix, 0, 4);
+            int length = BitConverter.ToInt32(lengthPrefix, 0);
+
+            // Lecture des données JSON
+            byte[] bytes = new byte[length];
+            int offset = 0;
+            while (offset < length)
+            {
+                offset += stream.Read(bytes, offset, length - offset);
+            }
+
+            string mapJson = Encoding.UTF8.GetString(bytes);
+            _map = JsonSerializer.Deserialize<Map.Map>(mapJson);
 
             while (true)
             {
@@ -56,20 +75,43 @@ public class Rover
 
     private string ExecuteCommand(Command command)
     {
-        Position p = new Position(position.Longitude, position.Latitude);
-        switch (command.ToString())
+        Position next = new Position(position.Longitude, position.Latitude);
+
+        // ---- ROTATIONS ----
+        if (command.Equals(Command.TournerAGauche))
         {
-            case "A": p           = orientation.Avancer(p); break;
-            case "R": p           = orientation.Reculer(p); break;
-            case "G": orientation = orientation.RotationAntihoraire(); break;
-            case "D": orientation = orientation.RotationHoraire(); break;
+            orientation = orientation.RotationAntihoraire();
+            return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
         }
 
-        position.Longitude = p.Longitude;
-        position.Latitude  = p.Latitude;
+        if (command.Equals(Command.TournerADroite))
+        {
+            orientation = orientation.RotationHoraire();
+            return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
+        }
+
+        // ---- CALCUL DU DEPLACEMENT ----
+        if (command.Equals(Command.Avancer))
+            next = orientation.Avancer(next);
+        else if (command.Equals(Command.Reculer))
+            next = orientation.Reculer(next);
+
+        // ---- DETECTION D’OBSTACLE ----
+        if (_map.hasObstacle(next.Longitude, next.Latitude))
+        {
+            // Position non mis a jour en cas d'obstacle detecté
+            return $"⛔ OBSTACLE détecté en ({next.Longitude},{next.Latitude}) — rover arrêté en ({position.Longitude},{position.Latitude})";
+        }
+        
+        position.Longitude = next.Longitude;
+        position.Latitude = next.Latitude;
 
         return $"✅ Position actuelle : ({position.Longitude}, {position.Latitude}, {orientation})";
     }
+
+
+
+
 
     // r�cup�ration du fichier config
 
