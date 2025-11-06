@@ -46,9 +46,7 @@ public class MapRenderer
         for (int y = playerY - radius; y <= playerY + radius; y++)
         {
             for (int x = playerX - radius; x <= playerX + radius; x++)
-                // Check bounds to prevent errors
-                if (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight)
-                    visibilityMap[x, y] = true;
+                visibilityMap[(x + mapWidth) % mapWidth, (y + mapHeight) % mapHeight] = true;
         }
     }
 }
