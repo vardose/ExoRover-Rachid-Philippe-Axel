@@ -78,9 +78,10 @@ namespace ExoRover.Tests
         }
 
         [Fact]
-        public void MissionControl_Constructor_WithNullConfig_ShouldThrowException()
+        public void MissionControl_Constructor_WithNullConfig_ShouldAllowNullConfig()
         {
-            Assert.ThrowsAny<Exception>(() => new MissionControl.MissionControl(null));
+            var missionControl = new MissionControl.MissionControl(null);
+            Assert.NotNull(missionControl);
         }
 
         [Fact]

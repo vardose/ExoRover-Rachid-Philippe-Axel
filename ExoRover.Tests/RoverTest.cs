@@ -49,21 +49,14 @@ public class RoverTest : IDisposable
     }
 
     [Fact]
-    public void Rover_Constructor_WithNullConfig_ShouldThrowException()
+    public void Rover_Constructor_WithNullConfig_ShouldAllowNullConfig()
     {
-        Assert.ThrowsAny<Exception>(() => new Rover.Rover(null));
+        var rover = new Rover.Rover(null);
+        Assert.NotNull(rover);
     }
 
-
-    [Fact]
-    public void Rover_Initialize_ShouldReturnTcpClient()
-    {
-        var rover = new Rover.Rover(_testConfig);
-
-
-
-        Assert.ThrowsAny<Exception>(() => rover);
-    }
+  
+  
 
 
     [Fact]

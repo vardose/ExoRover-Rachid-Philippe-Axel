@@ -72,8 +72,7 @@ public class MapConsoleRendererTest
     {
         var renderer = new MapRenderer();
         var map      = new Map.Map();
-        renderer.RoverX = 0;
-        renderer.RoverY = 0;
+        renderer.UpdateVisibility(0, 0, 1);
 
         var       originalOut  = Console.Out;
         using var stringWriter = new StringWriter();
@@ -84,8 +83,8 @@ public class MapConsoleRendererTest
             renderer.Render(map);
 
             var output = stringWriter.ToString();
-            Assert.True(output.Contains("^") || output.Contains(">") || output.Contains("v") || output.Contains("<")); // Le rover devrait être affiché avec une orientation
-            Assert.Contains(".", output); // Les cases vides devraient être affichées
+            Assert.True(output.Contains("^") || output.Contains(">") || output.Contains("v") || output.Contains("<"));
+            Assert.Contains(".", output);
         }
         finally
         {
